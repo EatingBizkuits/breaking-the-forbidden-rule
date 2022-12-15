@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ControlPanel</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+</head>
+<style>
+    :root {
+        --marginvalues: 20px;
+    }
+
+    * { 
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    #content table {
+        border-collapse: collapse;
+        margin: auto;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: center;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+
+    .container {
+        width: 500px;
+    }
+
+    #controls {
+        width: fit-content;
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    #controls label:not(.inputAndLabels label) {
+        margin-top: var(--marginvalues);
+    }
+
+    #controls button {
+        margin-top: calc(var(--marginvalues)/2);
+    }
+
+    #logout {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 12px;
+    }
+
+    #controls .inputAndLabels {
+        max-width: 500px;
+    }
+
+    /* Reusable CSS */
+    .flex {
+        display: flex;
+    }
+
+    .row {
+        flex-direction: row;
+    }
+
+    .center {
+        justify-content: center;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .inputAndLabels {
+        margin-top: calc(var(--marginvalues)/2);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    label {
+        margin: auto;
+    }
+
+</style>
+<body>
+    <div id="table-data ">
+        <div class="container">
+            <div id="content">
+                <table>
+                    <tr>
+                        <th>Texture Index</th>
+                        <th>Model Index</th>
+                    </tr>
+                    <tr>
+                        <td class="t-i id1">
+                            <input type="text" value="0" autocomplete="off">
+                        </td>
+                        <td class="m-i id1">
+                            <input type="text" value="0" autocomplete="off">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t-i id2">
+                            <input type="text" value="0" autocomplete="off">
+                        </td>
+                        <td class="m-i id2">
+                            <input type="text" value="0" autocomplete="off">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t-i id3">
+                            <input type="text" value="0" autocomplete="off">
+                        </td>
+                        <td class="m-i id3">
+                            <input type="text" value="0" autocomplete="off">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t-i id4">
+                            <input type="text" value="0" autocomplete="off">
+                        </td>
+                        <td class="m-i id4">
+                            <input type="text" value="0" autocomplete="off">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="t-i id5">
+                            <input type="text" value="0" autocomplete="off">
+                        </td>
+                        <td class="m-i id5">
+                            <input type="text" value="0" autocomplete="off">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="controls">
+                <div class="flex row center">
+                    <button id="rand-vase" type="button">Randomize Data</button>
+                </div>
+                <div class="inputAndLabels">
+                    <label for="userKey">target key:</label>
+                    <input id="userKey" type="text">
+                </div>
+                <div class="inputAndLabels">
+                    <label id="userPassLabel">target PW:</label>
+                    <input id="userPass" type="text">
+                </div>
+                <button id="login-update" type="button">Replace DB</button>
+                <button id="newUser" type="button">Create New Acc</button>
+            </div>
+        </div>
+    </div>
+
+    <button id="logout" class="hidden">Log Out</button>
+    
+    <script type="module" src="./firebase.js"></script>
+</body>
+</html>
