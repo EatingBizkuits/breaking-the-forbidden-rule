@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BreakingTheForbiddenRule</title>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/themes/smoothness/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Amaranth:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+</head>
+<style>
+    :root {
+        --nav-base: #081c34;
+    }
+
+    * { 
+        box-sizing: border-box;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        transition: ease-in all 0.3s;
+        font-family: 'Amaranth', sans-serif;
+    }
+
+    /* Navbar CSS */
+    body {
+        display: flex;
+        flex-direction: row;
+    }
+    
+    nav {
+        max-width: 20vw;
+        min-width: fit-content;
+        background-color: var(--nav-base);
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        padding: 50px 5px;
+    }
+    
+    nav.inactive {
+        position: absolute;
+        display: none;
+    }
+
+    #logo {
+        height: 80px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5vw;
+        color: orange;
+    }
+
+    .options {
+        height: 60px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        font-size: 1.5vw;
+        color:rgba(245, 245, 245, 0.8);
+    }
+
+    .options svg {
+        width: 30px;
+        filter: invert();
+        margin: 0 20px;
+    }
+
+    .options.startgame {
+        height: 100px;
+        margin-top: 30px;
+    }
+
+    .options.stats {
+        margin: 30px 0;
+    }
+
+    .options.logout span, .options.logout p{
+        transition: ease-in-out;
+        transition-delay: 0.2s;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .options.logout svg{
+        transition: ease-in-out;
+        width: 30px;
+    }
+
+    .options.logout:hover > span {
+        fill: cyan; /*Turns svg to red*/
+        color: red;
+    }    
+
+    nav .container {
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        margin-top: 20px;
+    }
+
+    .options:hover {
+        background-color: rgba(217, 222, 236, 0.08);
+        border-radius: 10px;
+    }
+
+    nav .line {
+        width: 85%;
+        background-color: rgba(245, 245, 245, 0.8);
+        height: 3px;
+        margin: 0 auto;
+        border-radius: 100px;
+    }
+
+    /*Nav Toggle*/
+    .nav-toggle-section {
+        display: flex;
+        width: 25px;
+        padding-top: 45vh;
+    }
+
+    #nav-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 70px;
+        padding: 0 5px;
+        background-color: var(--nav-base);
+        border: none;
+        border-radius: 0 10px 10px 0;
+    }
+
+    #nav-toggle svg {
+        width: 20px;
+        filter: invert();
+    }
+
+    main, .nav-toggle-section  {
+        background-color: rgba(245, 245, 245, 0.8);
+    }
+
+    .container {
+        display: flex;
+    }
+
+    main {
+        margin: 0 25px 0 5px;
+        display: grid;
+        grid-template-rows: 1vh 50vh 10vh 30vh 1vh;
+        gap: 2vh;
+    }
+
+    main section {
+        background-color: lightblue;
+    }
+
+    .cards {
+        background-color: green;  
+        display: grid;
+        grid-template-columns: repeat(5, 19%);
+        gap: 1%;
+    }
+    
+    .card {
+        width: 8em;
+        height: 10em;
+        margin: auto;
+        font-size: 1.4vw; 
+        background-color: lightgray;
+        padding: 0.5em;
+        border: 2px solid black;
+        border-radius: 0 0 20px 20px;
+    }
+
+    .card .wrapper {
+        width: 7em;
+        height: 7em;
+        background-color: black;
+    }
+
+    .card p {
+        width: 7em;
+        text-align: center;
+    }
+
+    .card .wrapper img {
+        background-image: ;
+    }
+
+    .card:hover  {
+        transform: translateY(-30px) rotateZ(10deg);
+    }
+
+
+    .relative {
+        position: relative;
+    }
+
+    .card .message {
+        position: absolute;
+        bottom: 0;
+    }
+
+</style>
+<body>
+    <nav class="">
+        <div class="container">
+            <div class="options startgame">
+                <?xml version="1.0" encoding="utf-8"?><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 122.88 79.92" style="enable-background:new 0 0 122.88 79.92" xml:space="preserve"><style type="text/css">.st0{fill-rule:evenodd;clip-rule:evenodd;}</style><g><path class="st0" d="M23.35,72.21c4.04-4.11,8.82-8.28,12.37-13.68h51.43c3.56,5.39,8.34,9.57,12.37,13.68 c30.95,31.52,28.87-42.32,7-64.5h-1.68C102.09,3.11,96.72,0,90.55,0c-6.17,0-11.53,3.11-14.28,7.71H46.61 C43.86,3.11,38.49,0,32.32,0c-6.17,0-11.53,3.11-14.29,7.71h-1.68C-5.52,29.89-7.6,103.72,23.35,72.21L23.35,72.21z M29.85,12.84 h11.11v8.85l8.85,0V32.8h-8.85v8.85H29.85V32.8H21V21.69h8.85L29.85,12.84L29.85,12.84L29.85,12.84z M83.16,36.9 c2.69,0,4.87,2.18,4.87,4.87c0,2.69-2.18,4.88-4.87,4.88s-4.87-2.18-4.87-4.88C78.29,39.08,80.47,36.9,83.16,36.9L83.16,36.9z M85.82,15.21c3.9,0,7.06,3.16,7.06,7.05c0,3.9-3.16,7.05-7.06,7.05c-3.9,0-7.05-3.16-7.05-7.05 C78.77,18.37,81.92,15.21,85.82,15.21L85.82,15.21z M104.04,26.11c2.69,0,4.87,2.18,4.87,4.87c0,2.69-2.18,4.87-4.87,4.87 c-2.69,0-4.88-2.18-4.88-4.87C99.16,28.29,101.35,26.11,104.04,26.11L104.04,26.11z"/></g></svg> 
+                Start Game
+            </div>
+            <div class="line"></div>
+            <div class="options stats">
+                <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 106.5"><defs><style>.cls-1{fill-rule:evenodd;}</style></defs><title>chart</title><path class="cls-1" d="M19.39,64.84v39.84a1.84,1.84,0,0,1-1.83,1.82H1.83A1.83,1.83,0,0,1,0,104.68V64.84ZM0,51.83,41.59,15.44c9.21,9,18.14,19.93,27.25,28.93L102.07,11,91.37.28,122.88,0V31.78L112.61,21.51c-7.37,7.47-24.8,23.92-32.17,31.3-9.33,9.32-13.78,9.49-23.1.17L41.59,35.46,23.13,51.83ZM114.37,38.69v66a1.84,1.84,0,0,1-1.82,1.82H96.81A1.84,1.84,0,0,1,95,104.68V57.29c3-2.91,6.5-6.29,10.07-9.73l7.45-7.17a24.16,24.16,0,0,1,1.87-1.7ZM82.71,68.34v36.34a1.84,1.84,0,0,1-1.83,1.82H65.15a1.84,1.84,0,0,1-1.83-1.82V72.22a22.48,22.48,0,0,0,5.73.63,24,24,0,0,0,13.66-4.51Zm-31.66-3v39.29a1.84,1.84,0,0,1-1.83,1.82H33.48a1.83,1.83,0,0,1-1.82-1.82V62q.48-.36.93-.75l7.86-7,6.34,7,.49.51q1.92,1.93,3.77,3.52Z"/></svg>
+                Your Stats
+            </div>
+            <div class="options account">
+                <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 122.88 122.88"><title>my-account</title><path d="M61.44,0a61.59,61.59,0,0,1,56.78,38l.07.18A61.43,61.43,0,0,1,18,104.88h0A61.54,61.54,0,0,1,4.66,84.94l-.07-.19A61.35,61.35,0,0,1,18,18h0A61.54,61.54,0,0,1,37.94,4.66l.18-.07A61.25,61.25,0,0,1,61.44,0ZM49.54,79.32c-2.14-1.83-4.2-3.89-4.54-7.65h-.28a3.79,3.79,0,0,1-1.87-.49,5.1,5.1,0,0,1-2.05-2.49c-.95-2.18-1.7-7.91.68-9.55L41,58.85l0-.64c-.1-1.15-.12-2.55-.14-4-.09-5.39-.2-11.91-4.53-13.22l-1.85-.56,1.22-1.51a70,70,0,0,1,10.84-11c4.17-3.28,8.41-5.47,12.56-6.1A15.09,15.09,0,0,1,71.3,25.22a23,23,0,0,1,3.27,3.28,13.93,13.93,0,0,1,9.78,5.72,19.89,19.89,0,0,1,3.18,6.42,22.34,22.34,0,0,1,.86,7.28,17.54,17.54,0,0,1-5.08,11.81,3.62,3.62,0,0,1,1.58.4c1.81,1,1.87,3.07,1.39,4.83-.47,1.47-1.06,3.17-1.63,4.6C84,71.5,83,71.86,81,71.65c-.08,4.18-2.8,6.18-5.47,8.49l.08.12a31.89,31.89,0,0,0,3.51,4.52.75.75,0,0,1,.12.14c6.19,4.38,19.56,5.44,25.34,8.66l.23.14a54.09,54.09,0,1,0-86.83,0h0l.23-.14C24,90.36,40.73,89.3,47,85a19.43,19.43,0,0,0,1.43-2.77c.41-1,.81-2,1.15-2.86Z"/></svg>
+                Your Account
+            </div>
+        </div>
+        <div class="options logout">
+            <span>
+                <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 118.74 122.88"><title>door-key</title><path d="M70,9.81c.14.13.27.26.4.4a34.29,34.29,0,0,1-.21,48.19l-.06.07L100,88.38h0L111.62,100h0l7.12,7.12-11.62,11.61L100,111.62,88.74,122.88,77.12,111.26,88.38,100l-6.14-6.14-13,13L57.65,95.21l13-13L58.47,70.09l-.07.06A34.22,34.22,0,0,1,10,21.75L21.75,10A34.28,34.28,0,0,1,70,9.81ZM61.31,34.2a15.32,15.32,0,0,0-4.47-10.87h0a15.45,15.45,0,0,0-21.76,0L23.32,35.07A15.39,15.39,0,0,0,45.08,56.83L56.83,45.08A15.35,15.35,0,0,0,61.31,34.2Z"/></svg>
+                <p>Log Out</p>
+            </span>
+        </div>
+    </nav>
+    <!-- Nav Toggle -->
+    <div class="nav-toggle-section">
+        <div id="nav-toggle" class="">
+            <svg xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" image-rendering="optimizeQuality" fill-rule="evenodd" clip-rule="evenodd" viewBox="0 0 346 511.48"><path fill-rule="nonzero" d="M346 101.8 201.49 255.74 346 409.68l-105.94 101.8L0 255.74 240.06 0z"/></svg>            </svg>
+        </div>
+    </div>
+    <!-- Main Content Here -->
+    <main>
+        <div></div>
+        <section>
+            <
+        </section>
+        <section>2</section>
+        <div class="cards">
+            <div class="card relative">
+                <div class="wrapper"></div>
+                <p>Case Finding #1</p>
+            </div>
+            <div class="card relative">
+                <div class="wrapper"></div>
+                <p>Case Finding #2</p>
+            </div>
+            <div class="card relative">
+                <div class="wrapper"></div>
+                <p>Case Finding #3</p>
+            </div>
+            <div class="card relative">
+                <div class="wrapper"></div>
+                <p>Case Finding #4</p>
+            </div>
+            <div class="card relative">
+                <div class="wrapper"></div>
+                <p>Case Finding #5</p>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="./script.js"></script>
+</body>
+</html>

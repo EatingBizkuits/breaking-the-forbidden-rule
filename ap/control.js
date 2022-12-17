@@ -160,7 +160,9 @@ function UpdateVaseTableAsObjectLiteral()
 function PushVaseTableIntoDB() {
   UpdateVaseTableAsObjectLiteral();
   set(ref(db, "players/" + userId + "/session"), {
-    startTime: Date.now(),
+    starttime: Date.now(),
+    sacid: Math.floor(Math.random() * 5), // which object is to be sacrified
+    keylocation: Math.floor(Math.random() * 5), // which vase is the key in
     vases: vasesData,
   })
 }
