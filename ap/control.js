@@ -97,8 +97,8 @@ function RandomizeData() {
   const modId = $(".m-i input")
 
   for (let i = 0; i < texId.length; i++) {
-    texId.eq(i).val(Math.floor(Math.random() * texId.length)).change();
-    modId.eq(i).val(Math.floor(Math.random() * texId.length)).change();
+    texId.eq(i).val(Math.floor(Math.random() * 5)).change();
+    modId.eq(i).val(Math.floor(Math.random() * 2)).change();
   }
 }
 
