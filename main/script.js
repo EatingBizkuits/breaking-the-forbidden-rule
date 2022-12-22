@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 import { getDatabase, ref, update, get, onValue, onChildRemoved } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, browserSessionPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, onAuthStateChanged, browserSessionPersistence, setPersistence } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -47,91 +47,90 @@ $(document).ready(function() {
 
 // When login button is clicked
 $(document).on("click", ".submit", function(e) {
-    // sign up
-    if ($("#sign-up").attr("style").indexOf("display: none;") == -1)
-    {
-        if (!$(e.currentTarget).hasClass("active"))
-        {
-            if ($(".sign-up.em").val().length <=0) {
-                $(".em.feedback").empty().html("Please fill in the form!").removeClass("hidden").fadeIn(200);
-                timeoutsEm = window.setTimeout(function() {
-                    $(".em.feedback").animate({opacity: 0}, 900);
-                }, 3000);
-            }
-            if ($(".sign-up.pw").val().length <=0) {
-                $(".pw.feedback").empty().html("Please fill in the form!").removeClass("hidden").fadeIn(200);
-                timeoutsPw = window.setTimeout(function() {
-                    $(".pw.feedback").animate({opacity: 0}, 900);
-                }, 3000);
-            }
-            if ($(".sign-up.pw2").val().length <=0) {
-                $(".pw2.feedback").empty().html("Please fill in the form!").removeClass("hidden").fadeIn(200);
-                timeoutsPw = window.setTimeout(function() {
-                    $(".pw2.feedback").animate({opacity: 0}, 900);
-                }, 3000);
-            }
-            return;
-        }
+    // // sign up
+    // if ($("#sign-up").attr("style").indexOf("display: none;") == -1)
+    // {
+    //     if (!$(e.currentTarget).hasClass("active"))
+    //     {
+    //         if ($(".sign-up.em").val().length <=0) {
+    //             $(".em.feedback").empty().html("Please fill in the form!").removeClass("hidden").fadeIn(200);
+    //             timeoutsEm = window.setTimeout(function() {
+    //                 $(".em.feedback").animate({opacity: 0}, 900);
+    //             }, 3000);
+    //         }
+    //         if ($(".sign-up.pw").val().length <=0) {
+    //             $(".pw.feedback").empty().html("Please fill in the form!").removeClass("hidden").fadeIn(200);
+    //             timeoutsPw = window.setTimeout(function() {
+    //                 $(".pw.feedback").animate({opacity: 0}, 900);
+    //             }, 3000);
+    //         }
+    //         if ($(".sign-up.pw2").val().length <=0) {
+    //             $(".pw2.feedback").empty().html("Please fill in the form!").removeClass("hidden").fadeIn(200);
+    //             timeoutsPw = window.setTimeout(function() {
+    //                 $(".pw2.feedback").animate({opacity: 0}, 900);
+    //             }, 3000);
+    //         }
+    //         return;
+    //     }
 
-        // Retrieve Info Signup
-        var email = $(".sign-up.em").val();
-        var password = $(".sign-up.pw").val();
-        var password2 = $(".sign-up.pw2").val();
+    //     // Retrieve Info Signup
+    //     var email = $(".sign-up.em").val();
+    //     var password = $(".sign-up.pw").val();
+    //     var password2 = $(".sign-up.pw2").val();
 
-        console.log("Email: " + email + " Password: " + password + " Password2: " + password2);
+    //     console.log("Email: " + email + " Password: " + password + " Password2: " + password2);
 
-        // Validation SignUp
+    //     // Validation SignUp
 
-        if (!emRegex.test(email))
-        {
-            $(".em.sign-up.feedback").empty().html("Invalid Email!").removeClass("hidden").fadeIn(200);
-                timeoutsEm = window.setTimeout(function() {
-                    $(".em.sign-up.feedback").animate({opacity: 0}, 900);
-                }, 3000);
-            return;
-        }
+    //     if (!emRegex.test(email))
+    //     {
+    //         $(".em.sign-up.feedback").empty().html("Invalid Email!").removeClass("hidden").fadeIn(200);
+    //             timeoutsEm = window.setTimeout(function() {
+    //                 $(".em.sign-up.feedback").animate({opacity: 0}, 900);
+    //             }, 3000);
+    //         return;
+    //     }
 
-        if (password.length < 7) {
-            $(".pw.sign-up.feedback").empty().html("Password should be 7 letters or more!").removeClass("hidden").fadeIn(200);
-                timeoutsPw = window.setTimeout(function() {
-                    $(".pw.sign-up.feedback").animate({opacity: 0}, 900);
-                }, 3000);
-            return;
-        } 
-        if (password2.length < 7) {
-            console.log("hello")
-            $(".pw2.sign-up.feedback").empty().html("Password should be 7 letters or more!").removeClass("hidden").fadeIn(200);
-                timeoutsPw2 = window.setTimeout(function() {
-                    $(".pw2.sign-up.feedback").animate({opacity: 0}, 900);
-                }, 3000);
-            return;
-        } 
-        else if (password2 != password)
-        {
-            console.log("hello2")
-            $(".pw2.sign-up.feedback").empty().html("Passwords should match!").removeClass("hidden").fadeIn(200);
-                timeoutsPw2 = window.setTimeout(function() {
-                    $(".pw2.sign-up.feedback").animate({opacity: 0}, 900);
-                }, 3000);
-            return;
-        }
+    //     if (password.length < 7) {
+    //         $(".pw.sign-up.feedback").empty().html("Password should be 7 letters or more!").removeClass("hidden").fadeIn(200);
+    //             timeoutsPw = window.setTimeout(function() {
+    //                 $(".pw.sign-up.feedback").animate({opacity: 0}, 900);
+    //             }, 3000);
+    //         return;
+    //     } 
+    //     if (password2.length < 7) {
+    //         console.log("hello")
+    //         $(".pw2.sign-up.feedback").empty().html("Password should be 7 letters or more!").removeClass("hidden").fadeIn(200);
+    //             timeoutsPw2 = window.setTimeout(function() {
+    //                 $(".pw2.sign-up.feedback").animate({opacity: 0}, 900);
+    //             }, 3000);
+    //         return;
+    //     } 
+    //     else if (password2 != password)
+    //     {
+    //         console.log("hello2")
+    //         $(".pw2.sign-up.feedback").empty().html("Passwords should match!").removeClass("hidden").fadeIn(200);
+    //             timeoutsPw2 = window.setTimeout(function() {
+    //                 $(".pw2.sign-up.feedback").animate({opacity: 0}, 900);
+    //             }, 3000);
+    //         return;
+    //     }
 
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((response) => {
-            console.log(response);
-            console.log("done");
-            $("#sign-up").animate({opacity: 0}, 800, function() {
-                $("#sign-up").fadeOut(10);
-                $("#log-in").css("display", "block").animate({opacity: 1, display: "block"}, 900)
-            });
+    //     createUserWithEmailAndPassword(auth, email, password)
+    //     .then((response) => {
+    //         console.log(response);
+    //         console.log("done");
+    //         $("#sign-up").animate({opacity: 0}, 800, function() {
+    //             $("#sign-up").fadeOut(10);
+    //             $("#log-in").css("display", "block").animate({opacity: 1, display: "block"}, 900)
+    //         });
 
-        }).catch(err => {
-            console.log(err.code);
-            console.log(err.message);
-        })
-    }
-    else 
-    {
+    //     }).catch(err => {
+    //         console.log(err.code);
+    //         console.log(err.message);
+    //     })
+    // }
+    // else 
         if (!$(e.currentTarget).hasClass("active"))
         {
             if ($(".sign-in.em").val().length <=0) {
@@ -193,25 +192,23 @@ $(document).on("click", ".submit", function(e) {
             console.log(err.code);
             console.log(err.message);
         });
-    }
 });
 
 // check if key is being pressed, ensures that fields are not empty
 $(document).on("keypress", function(e) {
     if (!$("input").focus()) return;
-    console.log($("#sign-up").val());
-    if ($("#sign-up").attr("style").indexOf("display: none;") == -1)
-    {
-        if ($("input.sign-up.em").val().length > 0 && $("input.sign-up.pw").val().length > 0 && $("input.sign-up.pw2").val().length > 0)
-        {
-            $(".signup.submit").addClass("active");
-        }
-        else {
-            $(".signup.submit.active").removeClass("active");
-        }
-    }   
-    else 
-    {
+    // console.log($("#sign-up").val());
+    // if ($("#sign-up").attr("style").indexOf("display: none;") == -1)
+    // {
+    //     if ($("input.sign-up.em").val().length > 0 && $("input.sign-up.pw").val().length > 0 && $("input.sign-up.pw2").val().length > 0)
+    //     {
+    //         $(".signup.submit").addClass("active");
+    //     }
+    //     else {
+    //         $(".signup.submit.active").removeClass("active");
+    //     }
+    // }   
+    // else 
         if ($("input.sign-in.em").val().length > 0 && $("input.sign-in.pw").val().length > 0)
         {
             $(".login.submit").addClass("active");
@@ -219,7 +216,6 @@ $(document).on("keypress", function(e) {
         else {
             $(".login.submit.active").removeClass("active");
         }
-    }
 })
 
 ///// NOTE: SIGN UP IS NOT TO BE SUPPORTED. DATAGENERATION ONLY APPLIES WITHIN UNITY ////
@@ -256,7 +252,7 @@ onAuthStateChanged(auth, (currentUser) => {
     snapshotTarget = ref(db, `players/${userId}/session`);
 
     onValue(snapshotTarget, (snapshot) => {
-        if (window.location.href.indexOf("game") == -1) return;
+        if (location.href.indexOf("game") == -1) return;
 
         sn = snapshot.val();
         
@@ -349,6 +345,17 @@ onAuthStateChanged(auth, (currentUser) => {
         }
     );
 
+    $(document).on("click", ".options.logout", function() {
+        signOut(auth).then(() => {
+        // Sign-out successful.
+        console.log("logged out");
+        location.href = "../../";
+        }).catch((err) => {
+        // An error happened.
+        console.log(err);
+        });
+    })
+
     function addVase(item, target) {
         $(target).droppable();
         $(target).append(item.clone()).parent().addClass("selected").parent().addClass("selected");
@@ -371,6 +378,13 @@ onAuthStateChanged(auth, (currentUser) => {
             "modId" : {
                 0 : "Mason Jar",
                 1 : "Olpe"
+            },
+            "locations" : {
+                0 : "Bookshelf Area 1",
+                1 : "Bookshelf Area 2",
+                2 : "Cabinet and Bookshelf Area",
+                3 : "Workdesk Area 1",
+                4 : "Workdesk Area 2"
             }
         }
 
@@ -396,7 +410,7 @@ onAuthStateChanged(auth, (currentUser) => {
                 console.log(appliedLocation)
             }
 
-            clue = `If there are ${clueCode[1]} ${statements["texId"][clueCode[0]]} vases, break this vase in location #${appliedLocation}`
+            clue = `If there are ${clueCode[1]} ${statements["texId"][clueCode[0]]} vases, break this vase at ${statements["locations"][appliedLocation]}`
         }
         // mTfactors
         else {
